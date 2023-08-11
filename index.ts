@@ -1,20 +1,26 @@
+// require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 import { TwitterApi } from "twitter-api-v2"
-// import { tokens } from "./tokens.js"
+
+// console.log(process.env)
 
 const twitterClient = new TwitterApi({
-	appKey: process.env.api_key,
-	appSecret: process.env.api_key_secret,
-	accessToken: process.env.access_token,
-	accessSecret: process.env.access_token_secret,
+	appKey: process.env.API_KEY,
+	appSecret: process.env.API_KEY_SECRET,
+	accessToken: process.env.ACCESS_TOKEN,
+	accessSecret: process.env.ACCESS_TOKEN_SECRET,
 })
+
 
 // await twitterClient.v2.tweet('Hello world')
 
 import { Configuration, OpenAIApi } from "openai"
+import { start } from 'repl'
 
 const configuration = new Configuration({
 	organization: "org-cypULIVFUpfH1UqvoxLehqMj",
-	apiKey: process.env.gpt_token,
+	apiKey: process.env.GPT_TOKEN,
 })
 
 const openai = new OpenAIApi(configuration)
@@ -59,7 +65,7 @@ const sendTweet = async () => {
 	const filteredTweet = removeHashAndEmo(tweet.content)
 	// console.log(filteredTweet)
     await twitterClient.v2.tweet(filteredTweet)
-
+    console.log(`tweeted: ${filteredTweet}`)
 }
-
+console.log('started')
 setInterval(sendTweet, 86400000)
